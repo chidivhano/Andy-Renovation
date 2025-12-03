@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andy Renovations | Cape Town</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Utilities for Animations */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 bg-slate-50 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-transparent">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <img 
+                  src="https://i.postimg.cc/jSTSxNqp/andy-logo.jpg" 
+                  alt="Andy Renovations Logo" 
+                  class="h-14 w-14 object-cover rounded-full border-2 border-green-500 shadow-sm" 
+                />
+                <span id="nav-brand-text" class="text-2xl font-bold tracking-tighter uppercase text-white">
+                  Andy<span class="text-green-500">Renovations</span>
+                </span>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
+                <a href="#about" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">About</a>
+                <a href="#services" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Services</a>
+                <a href="#process" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Process</a>
+                <a href="#gallery" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Projects</a>
+                <a href="#contact" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded font-bold transition-colors uppercase text-sm tracking-wide">
+                    Get a Quote
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-slate-900 shadow-xl border-t border-slate-800 transition-all duration-300">
+            <div class="flex flex-col p-6 space-y-4">
+                <a href="#home" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Home</a>
+                <a href="#about" class="mobile-link text-white hover:text-green-500 text-lg font-medium">About</a>
+                <a href="#services" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Services</a>
+                <a href="#process" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Process</a>
+                <a href="#gallery" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Projects</a>
+                <a href="#contact" class="mobile-link bg-green-600 text-center text-white px-5 py-3 rounded font-bold uppercase">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img 
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+                alt="Modern home with pool" 
+                class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40"></div>
+        </div>
+
+        <div class="container mx-auto px-4 z-10 relative mt-16">
+            <div class="fade-in-section max-w-3xl">
+                <!-- Floating Social Badge -->
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full mb-6">
+                    <i data-lucide="video" class="text-green-500 w-4 h-4"></i>
+                    <span class="text-sm font-semibold">Rated 5-Stars on Social Media | 4.3K+ Followers</span>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6 font-sans">
+                    TRANSFORMING <br />
+                    <span class="text-green-500">CAPE TOWN</span> HOMES
+                </h1>
+                
+                <p class="text-xl text-slate-300 mb-8 max-w-xl">
+                    Specialists in swimming pools, complete renovations, and precision paving. Quality work always explains itself.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#contact" class="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-4 rounded font-bold transition-all transform hover:scale-105 text-center flex items-center justify-center gap-2">
+                        Get Free Quote <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#gallery" class="bg-transparent border-2 border-white hover:bg-white hover:text-slate-900 text-white text-lg px-8 py-4 rounded font-bold transition-all text-center">
+                        View Our Work
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 relative">
+                    <div class="fade-in-section">
+                        <div class="relative rounded-lg overflow-hidden shadow-2xl">
+                            <img 
+                                src="https://i.postimg.cc/7hWDgGSb/Whats-App-Image-2025-12-03-at-17-55-41-65f64f9b.jpg" 
+                                alt="Andy Renovations Project" 
+                                class="w-full h-auto object-cover"
+                            />
+                            <div class="absolute bottom-0 left-0 bg-green-600 text-white p-6 rounded-tr-xl">
+                                <p class="font-bold text-3xl">100%</p>
+                                <p class="text-sm uppercase tracking-wide">Client Satisfaction</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="fade-in-section" style="transition-delay: 200ms;">
+                        <h4 class="text-green-600 font-bold uppercase tracking-wider mb-2">Who We Are</h4>
+                        <h2 class="text-4xl font-bold text-slate-900 mb-6">Quality Work Always Explains Itself</h2>
+                        <p class="text-slate-600 mb-6 text-lg leading-relaxed">
+                            Based in Cape Town and serving the surrounding Western Cape areas, Andy Renovations brings a rugged expertise to both new builds and property maintenance. 
+                        </p>
+                        <p class="text-slate-600 mb-8 text-lg leading-relaxed">
+                            We don't just build; we craft spaces. Whether it's a sparkling new fibreglass pool, a durable vibrecrete wall, or a complete home makeover, we bring a youthful energy and professional discipline to every job site.
+                        </p>
+                        
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
+                                <span class="font-medium text-slate-800">Servicing All Cape Town Areas</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
+                                <span class="font-medium text-slate-800">Specialized in Pools & Paving</span>
+                            </li>
+                            <li class="flex items-center space-x-3">
+                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
+                                <span class="font-medium text-slate-800">Highly Rated on TikTok & Facebook</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Our Expertise</h2>
+                <div class="w-20 h-1 bg-green-600 mx-auto rounded"></div>
+                <p class="mt-4 text-slate-400">Comprehensive construction solutions for your home.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="fade-in-section h-full" style="transition-delay: 0ms;">
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
+                        <div class="p-8 relative z-10 h-full flex flex-col">
+                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="droplets" class="text-white w-10 h-10"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Swimming Pools</h3>
+                            <p class="text-slate-400 mb-6 flex-grow">Expert installations, fibreglass linings, repairs, and seasonal maintenance.</p>
+                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
+                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="fade-in-section h-full" style="transition-delay: 100ms;">
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
+                        <div class="p-8 relative z-10 h-full flex flex-col">
+                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="hammer" class="text-white w-10 h-10"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Construction & Building</h3>
+                            <p class="text-slate-400 mb-6 flex-grow">New houses, renovations, durawalls, and vibrecrete solutions.</p>
+                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
+                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="fade-in-section h-full" style="transition-delay: 200ms;">
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
+                        <div class="p-8 relative z-10 h-full flex flex-col">
+                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="grid" class="text-white w-10 h-10"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Paving & Flooring</h3>
+                            <p class="text-slate-400 mb-6 flex-grow">Indoor/outdoor tiling, cobblestone, slabs, and precision brick paving.</p>
+                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
+                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="fade-in-section h-full" style="transition-delay: 300ms;">
+                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
+                        <div class="p-8 relative z-10 h-full flex flex-col">
+                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
+                                <i data-lucide="paintbrush" class="text-white w-10 h-10"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">General Maintenance</h3>
+                            <p class="text-slate-400 mb-6 flex-grow">Painting, ceiling installations, and comprehensive home improvements.</p>
+                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
+                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900">How We Work</h2>
+                <p class="text-slate-600 mt-2">Simple, transparent, and professional.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+                    
+                    <!-- Step 1 -->
+                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 0ms;">
+                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
+                            <i data-lucide="message-circle" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Consultation</h3>
+                        <p class="text-slate-600 text-sm">We discuss your vision and assess the site.</p>
+                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">01</div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 200ms;">
+                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
+                            <i data-lucide="file-text" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Quote & Plan</h3>
+                        <p class="text-slate-600 text-sm">Transparent pricing and detailed project roadmap.</p>
+                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">02</div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 400ms;">
+                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
+                            <i data-lucide="hard-hat" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Construction</h3>
+                        <p class="text-slate-600 text-sm">Our expert team executes the build with precision.</p>
+                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">03</div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 600ms;">
+                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
+                            <i data-lucide="check" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">The Finish</h3>
+                        <p class="text-slate-600 text-sm">Final walkthrough to ensure perfection.</p>
+                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">04</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h4 class="text-green-600 font-bold uppercase tracking-wider mb-2">Our Portfolio</h4>
+                    <h2 class="text-4xl font-bold text-slate-900">Recent Projects</h2>
+                </div>
+                <a 
+                    href="https://www.tiktok.com/@a.n.d.y025" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    class="mt-6 md:mt-0 inline-flex items-center space-x-2 bg-black text-white px-6 py-3 rounded-full hover:bg-slate-800 transition-colors"
+                >
+                    <i data-lucide="video" class="w-5 h-5"></i>
+                    <span>Watch on TikTok (@a.n.d.y025)</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer md:col-span-2">
+                    <img src="https://images.unsplash.com/photo-1562778612-e1e0cda9915c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Pool Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p class="text-white font-bold text-xl">Luxury Pool Installation</p>
+                    </div>
+                </div>
+                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1599809275372-b40c7e937747?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Paving Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p class="text-white font-bold text-xl">Driveway Paving</p>
+                    </div>
+                </div>
+                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Construction Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p class="text-white font-bold text-xl">Home Renovation</p>
+                    </div>
+                </div>
+                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer md:col-span-2">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Modern Interior" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <p class="text-white font-bold text-xl">Full House Build</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Contact Info -->
+                <div class="fade-in-section">
+                    <h4 class="text-green-500 font-bold uppercase tracking-wider mb-2">Get In Touch</h4>
+                    <h2 class="text-4xl font-bold mb-6">Let's Build Your Dream</h2>
+                    <p class="text-slate-400 mb-8 text-lg">
+                        Ready to transform your home? Contact Andy Renovations today for a free, no-obligation quote.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
+                                <i data-lucide="phone" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400">Call or WhatsApp</p>
+                                <a href="https://wa.me/27685923937" class="text-xl font-bold hover:text-green-500 transition-colors">068 592 3937</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
+                                <i data-lucide="mail" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400">Email Us</p>
+                                <a href="mailto:sandilema2372@gmail.com" class="text-xl font-bold hover:text-green-500 transition-colors break-all">sandilema2372@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
+                                <i data-lucide="map-pin" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-400">Location</p>
+                                <p class="text-xl font-bold">23 John Bridgeman Road,<br/>Cape Town</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="mt-12 flex space-x-4">
+                        <a href="#" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
+                            <i data-lucide="facebook" class="w-6 h-6"></i>
+                        </a>
+                        <a href="#" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
+                            <i data-lucide="instagram" class="w-6 h-6"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@a.n.d.y025" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
+                            <i data-lucide="video" class="w-6 h-6"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="fade-in-section" style="transition-delay: 200ms;">
+                    <div class="bg-white rounded-2xl p-8 text-slate-900 shadow-2xl">
+                        <h3 class="text-2xl font-bold mb-6">Request a Quote</h3>
+                        <form class="space-y-4" onsubmit="event.preventDefault()">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Your Name</label>
+                                <input type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="John Doe" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="john@example.com" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Service Needed</label>
+                                <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors">
+                                    <option>Swimming Pool</option>
+                                    <option>Renovation / Building</option>
+                                    <option>Paving / Flooring</option>
+                                    <option>General Maintenance</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="Tell us about your project..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg uppercase tracking-wide transition-all transform hover:-translate-y-1 shadow-lg">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 text-center text-slate-500 text-sm">
+        <div class="container mx-auto px-4">
+            <p class="mb-2">&copy; <span id="year"></span> Andy Renovations. All Rights Reserved.</p>
+            <p>Designed for Excellence in Cape Town.</p>
+        </div>
+    </footer>
+
+    <!-- Script for Interactivity -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Update Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close menu when link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Sticky Navbar Logic
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-900', 'shadow-lg', 'py-3');
+                navbar.classList.remove('bg-transparent', 'py-5');
+            } else {
+                navbar.classList.remove('bg-slate-900', 'shadow-lg', 'py-3');
+                navbar.classList.add('bg-transparent', 'py-5');
+            }
+        });
+
+        // Fade In Animation using Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
