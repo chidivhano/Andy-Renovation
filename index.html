@@ -1,534 +1,629 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andy Renovations | Cape Town</title>
+    <title>Andy Renovations | Cape Town Construction Specialists</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 
-    <!-- Custom Config -->
+    <!-- Styles configuration -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
                     },
+                    colors: {
+                        primary: '#1E3A8A', // Navy Blue
+                        accent: '#0EA5E9',  // Bright Blue
+                        secondary: '#FACC15', // Gold
+                        dark: '#1F2937',    // Charcoal
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
                 }
             }
         }
     </script>
-
     <style>
-        /* Custom Utilities for Animations */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        body { font-family: 'Open Sans', sans-serif; }
+        h1, h2, h3, h4, h5, h6, button { font-family: 'Montserrat', sans-serif; }
     </style>
+
+    <!-- Import Map for React & Lucide -->
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "lucide-react": "https://esm.sh/lucide-react@0.344.0"
+        }
+    }
+    </script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="font-sans text-slate-800 bg-slate-50 overflow-x-hidden">
+<body class="bg-white text-gray-800 antialiased">
+    <div id="root"></div>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5 bg-transparent">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            
-            <!-- Logo -->
-            <div class="flex items-center space-x-3">
-                <img 
-                  src="https://i.postimg.cc/jSTSxNqp/andy-logo.jpg" 
-                  alt="Andy Renovations Logo" 
-                  class="h-14 w-14 object-cover rounded-full border-2 border-green-500 shadow-sm" 
-                />
-                <span id="nav-brand-text" class="text-2xl font-bold tracking-tighter uppercase text-white">
-                  Andy<span class="text-green-500">Renovations</span>
-                </span>
-            </div>
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { 
+            Menu, X, Phone, Mail, MapPin, Facebook, Youtube, Twitch, 
+            Hammer, Paintbrush, Droplets, BrickWall, CheckCircle, 
+            ArrowRight, Star, Clock, ShieldCheck, Video
+        } from 'lucide-react';
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
-                <a href="#about" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">About</a>
-                <a href="#services" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Services</a>
-                <a href="#process" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Process</a>
-                <a href="#gallery" class="nav-link text-white hover:text-green-500 font-medium transition-colors text-sm uppercase tracking-wider">Projects</a>
-                <a href="#contact" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded font-bold transition-colors uppercase text-sm tracking-wide">
-                    Get a Quote
-                </a>
-            </div>
+        // --- Assets & Data ---
 
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                <i data-lucide="menu" class="w-8 h-8"></i>
-            </button>
-        </div>
-
-        <!-- Mobile Menu Overlay -->
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-slate-900 shadow-xl border-t border-slate-800 transition-all duration-300">
-            <div class="flex flex-col p-6 space-y-4">
-                <a href="#home" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Home</a>
-                <a href="#about" class="mobile-link text-white hover:text-green-500 text-lg font-medium">About</a>
-                <a href="#services" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Services</a>
-                <a href="#process" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Process</a>
-                <a href="#gallery" class="mobile-link text-white hover:text-green-500 text-lg font-medium">Projects</a>
-                <a href="#contact" class="mobile-link bg-green-600 text-center text-white px-5 py-3 rounded font-bold uppercase">Get a Quote</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0">
-            <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-                alt="Modern home with pool" 
-                class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40"></div>
-        </div>
-
-        <div class="container mx-auto px-4 z-10 relative mt-16">
-            <div class="fade-in-section max-w-3xl">
-                <!-- Floating Social Badge -->
-                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full mb-6">
-                    <i data-lucide="video" class="text-green-500 w-4 h-4"></i>
-                    <span class="text-sm font-semibold">Rated 5-Stars on Social Media | 4.3K+ Followers</span>
-                </div>
-
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6 font-sans">
-                    TRANSFORMING <br />
-                    <span class="text-green-500">CAPE TOWN</span> HOMES
-                </h1>
-                
-                <p class="text-xl text-slate-300 mb-8 max-w-xl">
-                    Specialists in swimming pools, complete renovations, and precision paving. Quality work always explains itself.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#contact" class="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-4 rounded font-bold transition-all transform hover:scale-105 text-center flex items-center justify-center gap-2">
-                        Get Free Quote <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#gallery" class="bg-transparent border-2 border-white hover:bg-white hover:text-slate-900 text-white text-lg px-8 py-4 rounded font-bold transition-all text-center">
-                        View Our Work
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2 relative">
-                    <div class="fade-in-section">
-                        <div class="relative rounded-lg overflow-hidden shadow-2xl">
-                            <img 
-                                src="https://i.postimg.cc/7hWDgGSb/Whats-App-Image-2025-12-03-at-17-55-41-65f64f9b.jpg" 
-                                alt="Andy Renovations Project" 
-                                class="w-full h-auto object-cover"
-                            />
-                            <div class="absolute bottom-0 left-0 bg-green-600 text-white p-6 rounded-tr-xl">
-                                <p class="font-bold text-3xl">100%</p>
-                                <p class="text-sm uppercase tracking-wide">Client Satisfaction</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:w-1/2">
-                    <div class="fade-in-section" style="transition-delay: 200ms;">
-                        <h4 class="text-green-600 font-bold uppercase tracking-wider mb-2">Who We Are</h4>
-                        <h2 class="text-4xl font-bold text-slate-900 mb-6">Quality Work Always Explains Itself</h2>
-                        <p class="text-slate-600 mb-6 text-lg leading-relaxed">
-                            Based in Cape Town and serving the surrounding Western Cape areas, Andy Renovations brings a rugged expertise to both new builds and property maintenance. 
-                        </p>
-                        <p class="text-slate-600 mb-8 text-lg leading-relaxed">
-                            We don't just build; we craft spaces. Whether it's a sparkling new fibreglass pool, a durable vibrecrete wall, or a complete home makeover, we bring a youthful energy and professional discipline to every job site.
-                        </p>
-                        
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-center space-x-3">
-                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
-                                <span class="font-medium text-slate-800">Servicing All Cape Town Areas</span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
-                                <span class="font-medium text-slate-800">Specialized in Pools & Paving</span>
-                            </li>
-                            <li class="flex items-center space-x-3">
-                                <i data-lucide="check-circle" class="text-green-500 w-6 h-6"></i>
-                                <span class="font-medium text-slate-800">Highly Rated on TikTok & Facebook</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-20 bg-slate-900 text-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Our Expertise</h2>
-                <div class="w-20 h-1 bg-green-600 mx-auto rounded"></div>
-                <p class="mt-4 text-slate-400">Comprehensive construction solutions for your home.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                
-                <!-- Service 1 -->
-                <div class="fade-in-section h-full" style="transition-delay: 0ms;">
-                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
-                        <div class="p-8 relative z-10 h-full flex flex-col">
-                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                                <i data-lucide="droplets" class="text-white w-10 h-10"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Swimming Pools</h3>
-                            <p class="text-slate-400 mb-6 flex-grow">Expert installations, fibreglass linings, repairs, and seasonal maintenance.</p>
-                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
-                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Service 2 -->
-                <div class="fade-in-section h-full" style="transition-delay: 100ms;">
-                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
-                        <div class="p-8 relative z-10 h-full flex flex-col">
-                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                                <i data-lucide="hammer" class="text-white w-10 h-10"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Construction & Building</h3>
-                            <p class="text-slate-400 mb-6 flex-grow">New houses, renovations, durawalls, and vibrecrete solutions.</p>
-                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
-                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="fade-in-section h-full" style="transition-delay: 200ms;">
-                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
-                        <div class="p-8 relative z-10 h-full flex flex-col">
-                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                                <i data-lucide="grid" class="text-white w-10 h-10"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">Paving & Flooring</h3>
-                            <p class="text-slate-400 mb-6 flex-grow">Indoor/outdoor tiling, cobblestone, slabs, and precision brick paving.</p>
-                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
-                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="fade-in-section h-full" style="transition-delay: 300ms;">
-                    <div class="group relative overflow-hidden rounded-xl bg-slate-800 hover:-translate-y-2 transition-transform duration-300 h-full border border-slate-700 hover:border-green-500">
-                        <div class="p-8 relative z-10 h-full flex flex-col">
-                            <div class="bg-green-600 w-16 h-16 rounded-lg flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 transition-transform">
-                                <i data-lucide="paintbrush" class="text-white w-10 h-10"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-3">General Maintenance</h3>
-                            <p class="text-slate-400 mb-6 flex-grow">Painting, ceiling installations, and comprehensive home improvements.</p>
-                            <a href="#contact" class="text-green-500 font-bold uppercase text-sm tracking-wider flex items-center group-hover:text-white transition-colors">
-                                Book Service <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Section -->
-    <section id="process" class="py-20 bg-slate-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900">How We Work</h2>
-                <p class="text-slate-600 mt-2">Simple, transparent, and professional.</p>
-            </div>
-
-            <div class="relative">
-                <!-- Connecting Line (Desktop) -->
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-200 -translate-y-1/2 z-0"></div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-                    
-                    <!-- Step 1 -->
-                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 0ms;">
-                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
-                            <i data-lucide="message-circle" class="w-7 h-7"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Consultation</h3>
-                        <p class="text-slate-600 text-sm">We discuss your vision and assess the site.</p>
-                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">01</div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 200ms;">
-                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
-                            <i data-lucide="file-text" class="w-7 h-7"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Quote & Plan</h3>
-                        <p class="text-slate-600 text-sm">Transparent pricing and detailed project roadmap.</p>
-                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">02</div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 400ms;">
-                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
-                            <i data-lucide="hard-hat" class="w-7 h-7"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Construction</h3>
-                        <p class="text-slate-600 text-sm">Our expert team executes the build with precision.</p>
-                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">03</div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="fade-in-section bg-white p-6 rounded-xl shadow-lg border-b-4 border-green-600 text-center transform transition hover:scale-105" style="transition-delay: 600ms;">
-                        <div class="w-16 h-16 mx-auto bg-slate-900 text-white rounded-full flex items-center justify-center mb-4 border-4 border-white shadow">
-                            <i data-lucide="check" class="w-7 h-7"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">The Finish</h3>
-                        <p class="text-slate-600 text-sm">Final walkthrough to ensure perfection.</p>
-                        <div class="mt-4 text-green-600 font-bold text-4xl opacity-20 absolute top-2 right-4">04</div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
-                <div>
-                    <h4 class="text-green-600 font-bold uppercase tracking-wider mb-2">Our Portfolio</h4>
-                    <h2 class="text-4xl font-bold text-slate-900">Recent Projects</h2>
-                </div>
-                <a 
-                    href="https://www.tiktok.com/@a.n.d.y025" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    class="mt-6 md:mt-0 inline-flex items-center space-x-2 bg-black text-white px-6 py-3 rounded-full hover:bg-slate-800 transition-colors"
-                >
-                    <i data-lucide="video" class="w-5 h-5"></i>
-                    <span>Watch on TikTok (@a.n.d.y025)</span>
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer md:col-span-2">
-                    <img src="https://images.unsplash.com/photo-1562778612-e1e0cda9915c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Pool Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <p class="text-white font-bold text-xl">Luxury Pool Installation</p>
-                    </div>
-                </div>
-                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1599809275372-b40c7e937747?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Paving Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <p class="text-white font-bold text-xl">Driveway Paving</p>
-                    </div>
-                </div>
-                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer">
-                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Construction Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <p class="text-white font-bold text-xl">Home Renovation</p>
-                    </div>
-                </div>
-                <div class="group relative h-64 overflow-hidden rounded-lg cursor-pointer md:col-span-2">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Modern Interior" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <p class="text-white font-bold text-xl">Full House Build</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-slate-900 text-white">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                
-                <!-- Contact Info -->
-                <div class="fade-in-section">
-                    <h4 class="text-green-500 font-bold uppercase tracking-wider mb-2">Get In Touch</h4>
-                    <h2 class="text-4xl font-bold mb-6">Let's Build Your Dream</h2>
-                    <p class="text-slate-400 mb-8 text-lg">
-                        Ready to transform your home? Contact Andy Renovations today for a free, no-obligation quote.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
-                                <i data-lucide="phone" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-400">Call or WhatsApp</p>
-                                <a href="https://wa.me/27685923937" class="text-xl font-bold hover:text-green-500 transition-colors">068 592 3937</a>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
-                                <i data-lucide="mail" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-400">Email Us</p>
-                                <a href="mailto:sandilema2372@gmail.com" class="text-xl font-bold hover:text-green-500 transition-colors break-all">sandilema2372@gmail.com</a>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start space-x-4">
-                            <div class="bg-slate-800 p-3 rounded-lg text-green-500">
-                                <i data-lucide="map-pin" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-400">Location</p>
-                                <p class="text-xl font-bold">23 John Bridgeman Road,<br/>Cape Town</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Social Links -->
-                    <div class="mt-12 flex space-x-4">
-                        <a href="#" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
-                            <i data-lucide="facebook" class="w-6 h-6"></i>
-                        </a>
-                        <a href="#" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
-                            <i data-lucide="instagram" class="w-6 h-6"></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@a.n.d.y025" class="bg-slate-800 p-3 rounded-full hover:bg-green-600 transition-colors">
-                            <i data-lucide="video" class="w-6 h-6"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="fade-in-section" style="transition-delay: 200ms;">
-                    <div class="bg-white rounded-2xl p-8 text-slate-900 shadow-2xl">
-                        <h3 class="text-2xl font-bold mb-6">Request a Quote</h3>
-                        <form class="space-y-4" onsubmit="event.preventDefault()">
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Your Name</label>
-                                <input type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="John Doe" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Email Address</label>
-                                <input type="email" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="john@example.com" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Service Needed</label>
-                                <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors">
-                                    <option>Swimming Pool</option>
-                                    <option>Renovation / Building</option>
-                                    <option>Paving / Flooring</option>
-                                    <option>General Maintenance</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Message</label>
-                                <textarea rows="4" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors" placeholder="Tell us about your project..."></textarea>
-                            </div>
-                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg uppercase tracking-wide transition-all transform hover:-translate-y-1 shadow-lg">
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black py-8 text-center text-slate-500 text-sm">
-        <div class="container mx-auto px-4">
-            <p class="mb-2">&copy; <span id="year"></span> Andy Renovations. All Rights Reserved.</p>
-            <p>Designed for Excellence in Cape Town.</p>
-        </div>
-    </footer>
-
-    <!-- Script for Interactivity -->
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Update Year
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Mobile Menu Logic
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        const menuIcon = mobileMenuBtn.querySelector('i');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close menu when link is clicked
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-
-        // Sticky Navbar Logic
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('bg-slate-900', 'shadow-lg', 'py-3');
-                navbar.classList.remove('bg-transparent', 'py-5');
-            } else {
-                navbar.classList.remove('bg-slate-900', 'shadow-lg', 'py-3');
-                navbar.classList.add('bg-transparent', 'py-5');
-            }
-        });
-
-        // Fade In Animation using Intersection Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+        const IMAGES = {
+            hero: "https://i.postimg.cc/xTfyZcHT/Hero-1.jpg",
+            pool: "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            construction: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            tiling: "https://images.unsplash.com/photo-1623936665077-83d844c20723?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            painting: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            team: "https://i.postimg.cc/W4F43hqc/ANDY-1.jpg",
+            founder: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+        const SERVICES = [
+            {
+                id: 'pools',
+                title: 'Swimming Pools',
+                icon: <Droplets className="w-8 h-8 text-white" />,
+                desc: 'Installations, fibreglass linings, repairs & maintenance.',
+                image: IMAGES.pool,
+                details: ['Pool installations', 'Fibreglass linings', 'Leak detection & repairs', 'Monthly maintenance']
+            },
+            {
+                id: 'construction',
+                title: 'Building & Renovations',
+                icon: <BrickWall className="w-8 h-8 text-white" />,
+                desc: 'New builds, home extensions, durability walls & ceilings.',
+                image: IMAGES.construction,
+                details: ['New house construction', 'Home extensions', 'Durawalls & Vibacrete', 'Ceiling installation']
+            },
+            {
+                id: 'paving',
+                title: 'Tiling & Paving',
+                icon: <Hammer className="w-8 h-8 text-white" />,
+                desc: 'Expert indoor/outdoor tiling and cobblestone paving.',
+                image: IMAGES.tiling,
+                details: ['Indoor ceramic/porcelain', 'Outdoor paving slabs', 'Cobblestone driveways', 'Bathroom renovations']
+            },
+            {
+                id: 'maintenance',
+                title: 'General Maintenance',
+                icon: <Paintbrush className="w-8 h-8 text-white" />,
+                desc: 'Painting, waterproofing, and general property care.',
+                image: IMAGES.painting,
+                details: ['Interior & exterior painting', 'Crack repairs', 'Waterproofing', 'General handyman work']
+            }
+        ];
 
-        document.querySelectorAll('.fade-in-section').forEach(section => {
-            observer.observe(section);
-        });
+        const TESTIMONIALS = [
+            { name: "Karen", location: "Cape Town", text: "Outstanding work! My pool looks brand new. The fibreglass lining is perfect." },
+            { name: "Thembi", location: "Mitchells Plain", text: "Amazing job on our home renovations. Highly recommended for their speed and quality." },
+            { name: "David", location: "Sea Point", text: "Professional paving work. They transformed our driveway completely." }
+        ];
+
+        // --- Sub Components ---
+
+        const SectionTitle = ({ title, subtitle, align = 'center' }) => (
+            <div className={`mb-12 text-${align}`}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary uppercase tracking-wide">{title}</h2>
+                <div className={`h-1 w-20 bg-secondary ${align === 'center' ? 'mx-auto' : ''} mb-4`}></div>
+                {subtitle && <p className="text-gray-600 max-w-2xl mx-auto">{subtitle}</p>}
+            </div>
+        );
+
+        const Button = ({ children, primary = true, onClick, className = '' }) => (
+            <button 
+                onClick={onClick}
+                className={`px-8 py-3 rounded-md font-bold transition-all duration-300 transform hover:-translate-y-1 shadow-md
+                    ${primary 
+                        ? 'bg-primary text-white hover:bg-accent' 
+                        : 'bg-secondary text-dark hover:bg-[#ffe066]'} 
+                    ${className}`}
+            >
+                {children}
+            </button>
+        );
+
+        const WhatsAppButton = () => (
+            <a 
+                href="https://wa.me/27685923937" 
+                target="_blank" 
+                rel="noreferrer"
+                className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-110 flex items-center gap-2 group"
+            >
+                <Phone className="w-6 h-6" />
+                <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap font-bold">
+                    WhatsApp Us
+                </span>
+            </a>
+        );
+
+        // --- Pages ---
+
+        const HomePage = ({ setPage }) => (
+            <div className="animate-fadeIn">
+                {/* Hero Section */}
+                <div className="relative h-[85vh] flex items-center justify-center overflow-hidden">
+                    <div 
+                        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: `url(${IMAGES.hero})` }}
+                    />
+                    <div className="absolute inset-0 bg-primary bg-opacity-70 z-10" />
+                    
+                    <div className="relative z-20 text-center px-4 max-w-5xl mx-auto text-white">
+                        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-lg font-heading">
+                            Quality Work Always <span className="text-secondary">Explains Itself</span>
+                        </h1>
+                        <p className="text-xl md:text-2xl mb-10 text-gray-200 font-light">
+                            Professional construction, swimming pool installations, and home renovations across Cape Town.
+                        </p>
+                        <div className="flex flex-col md:flex-row gap-4 justify-center">
+                            <Button onClick={() => setPage('contact')} primary={false}>Get a Free Quote</Button>
+                            <Button onClick={() => setPage('services')}>View Our Services</Button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Services Overview */}
+                <section className="py-20 bg-white px-4">
+                    <div className="container mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 -mt-32 relative z-30">
+                            {SERVICES.map((service) => (
+                                <div key={service.id} className="bg-white p-8 rounded-xl shadow-xl border-b-4 border-secondary hover:transform hover:-translate-y-2 transition-all">
+                                    <div className="bg-primary w-14 h-14 rounded-full flex items-center justify-center mb-6">
+                                        {service.icon}
+                                    </div>
+                                    <h3 className="text-xl font-bold text-dark mb-3 font-heading">{service.title}</h3>
+                                    <p className="text-gray-600 mb-4">{service.desc}</p>
+                                    <button onClick={() => setPage('services')} className="text-accent font-semibold flex items-center gap-1 hover:gap-2 transition-all">
+                                        Learn More <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Why Choose Us */}
+                <section className="py-16 bg-[#F9FAFB] px-4">
+                    <div className="container mx-auto flex flex-col md:flex-row items-center gap-12">
+                        <div className="md:w-1/2">
+                            <img src={IMAGES.team} alt="Construction Team" className="rounded-lg shadow-2xl w-full object-cover" />
+                        </div>
+                        <div className="md:w-1/2">
+                            <SectionTitle 
+                                title="Why Choose Andy Renovations?" 
+                                align="left"
+                                subtitle="We are dedicated to transforming your vision into reality with precision and care."
+                            />
+                            <div className="space-y-6">
+                                {[
+                                    { icon: Clock, title: "Established in 2023", text: "Building a legacy of trust quickly in Cape Town." },
+                                    { icon: ShieldCheck, title: "Quality Guaranteed", text: "We stand by our motto: Quality work always explains itself." },
+                                    { icon: Star, title: "Skilled Specialists", text: "Experts in pools, paving, and construction." }
+                                ].map((item, idx) => (
+                                    <div key={idx} className="flex gap-4">
+                                        <div className="bg-[#E0F2FE] p-3 rounded-full h-fit">
+                                            <item.icon className="w-6 h-6 text-accent" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-lg font-bold text-dark font-heading">{item.title}</h4>
+                                            <p className="text-gray-600">{item.text}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Testimonials */}
+                <section className="py-20 bg-primary text-white px-4">
+                    <div className="container mx-auto text-center">
+                        <h2 className="text-3xl font-bold mb-12 font-heading">What Our Clients Say</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {TESTIMONIALS.map((t, i) => (
+                                <div key={i} className="bg-dark p-8 rounded-lg shadow-lg relative">
+                                    <div className="text-secondary text-4xl absolute top-4 left-4">"</div>
+                                    <p className="text-gray-300 italic mb-6 relative z-10 pt-4">{t.text}</p>
+                                    <div className="font-bold text-secondary font-heading">{t.name}</div>
+                                    <div className="text-sm text-gray-400">{t.location}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        );
+
+        const AboutPage = ({ setPage }) => (
+            <div className="animate-fadeIn pt-24 pb-16 px-4">
+                <div className="container mx-auto">
+                    <SectionTitle title="About Andy Renovations" subtitle="Building dreams in the Western Cape" />
+                    
+                    <div className="flex flex-col md:flex-row gap-12 items-center mb-20">
+                        <div className="md:w-1/2 relative">
+                            <div className="absolute top-4 left-4 w-full h-full border-4 border-secondary rounded-lg transform translate-x-4 translate-y-4"></div>
+                            <img src={IMAGES.founder} alt="Andy - Founder" className="rounded-lg shadow-xl relative z-10 w-full object-cover h-96" />
+                        </div>
+                        <div className="md:w-1/2">
+                            <h3 className="text-2xl font-bold text-primary mb-4 font-heading">Our Origin Story</h3>
+                            <p className="text-gray-700 leading-relaxed mb-6">
+                                Originally from Bulawayo, Zimbabwe, Andy founded <strong>Andy Renovations</strong> in 2023 with a singular vision: to bring honest, hard-working craftsmanship to the homes of Cape Town. 
+                            </p>
+                            <p className="text-gray-700 leading-relaxed mb-6">
+                                Starting with a small team and a commitment to excellence, we have grown into a trusted name for swimming pool installations and home improvements. We believe that your home is your sanctuary, and every brick laid or tile placed should reflect that importance.
+                            </p>
+                            <div className="grid grid-cols-2 gap-4 mt-8">
+                                <div className="bg-[#F9FAFB] p-4 rounded-lg border-l-4 border-accent">
+                                    <h4 className="font-bold text-dark font-heading">Mission</h4>
+                                    <p className="text-sm text-gray-600">To provide affordable, high-quality renovation solutions.</p>
+                                </div>
+                                <div className="bg-[#F9FAFB] p-4 rounded-lg border-l-4 border-secondary">
+                                    <h4 className="font-bold text-dark font-heading">Values</h4>
+                                    <p className="text-sm text-gray-600">Integrity, Reliability, Excellence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-dark text-white rounded-2xl p-12 text-center">
+                        <h3 className="text-2xl font-bold mb-6 font-heading">Ready to start your project?</h3>
+                        <Button onClick={() => setPage('contact')} primary={false}>Get a Quote Today</Button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const ServicesPage = ({ setPage }) => (
+            <div className="animate-fadeIn pt-24 pb-16 px-4 bg-[#F9FAFB]">
+                <div className="container mx-auto">
+                    <SectionTitle title="Our Expert Services" subtitle="Comprehensive solutions for your home and outdoor spaces" />
+                    
+                    <div className="space-y-16">
+                        {SERVICES.map((service, index) => (
+                            <div key={service.id} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 bg-white rounded-xl shadow-lg overflow-hidden`}>
+                                <div className="md:w-1/2 h-64 md:h-auto">
+                                    <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                                </div>
+                                <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="bg-primary p-2 rounded-lg">
+                                            {service.icon}
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-dark font-heading">{service.title}</h3>
+                                    </div>
+                                    <p className="text-gray-600 mb-6 text-lg">{service.desc}</p>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                                        {service.details.map((detail, i) => (
+                                            <li key={i} className="flex items-center gap-2 text-gray-700">
+                                                <CheckCircle className="w-5 h-5 text-accent" />
+                                                {detail}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <Button onClick={() => setPage('contact')} className="w-fit">Book This Service</Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const GalleryPage = () => {
+            const [filter, setFilter] = useState('All');
+            
+            const galleryItems = [
+                { id: 1, cat: 'Pools', img: "https://images.unsplash.com/photo-1562778612-e1e0cda9915c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 2, cat: 'Construction', img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 3, cat: 'Tiling', img: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 4, cat: 'Pools', img: "https://images.unsplash.com/photo-1532323544230-7191fd51bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 5, cat: 'Paving', img: "https://images.unsplash.com/photo-1596136709970-13d803c73449?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 6, cat: 'Painting', img: "https://images.unsplash.com/photo-1562259949-e8e7689d7828?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" },
+                { id: 7, cat: 'Construction', img: "https://i.postimg.cc/P5d3Twc5/ANDY-2.jpg" },
+                { id: 8, cat: 'Pools', img: "https://i.postimg.cc/L8mC217g/ANDY-3.jpg" },
+                { id: 9, cat: 'Painting', img: "https://i.postimg.cc/L8mC217q/ANDY-4.png" },
+            ];
+
+            const filteredItems = filter === 'All' ? galleryItems : galleryItems.filter(item => item.cat === filter);
+
+            return (
+                <div className="animate-fadeIn pt-24 pb-16 px-4">
+                    <div className="container mx-auto">
+                        <SectionTitle title="Our Recent Projects" subtitle="A showcase of our dedication to quality" />
+                        
+                        <div className="flex flex-wrap justify-center gap-2 mb-12">
+                            {['All', 'Pools', 'Construction', 'Tiling', 'Paving', 'Painting'].map(cat => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setFilter(cat)}
+                                    className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors
+                                        ${filter === cat ? 'bg-primary text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                            {filteredItems.map(item => (
+                                <div key={item.id} className="group relative overflow-hidden rounded-xl shadow-lg h-64 cursor-pointer">
+                                    <img 
+                                        src={item.img} 
+                                        alt={item.cat} 
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                    />
+                                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
+                                        <span className="text-white font-bold text-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                            {item.cat} Project
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ContactPage = () => (
+            <div className="animate-fadeIn pt-24 pb-16 px-4 bg-[#F9FAFB]">
+                <div className="container mx-auto">
+                    <SectionTitle title="Get In Touch" subtitle="We're ready to start your project. Contact us today." />
+                    
+                    <div className="flex flex-col lg:flex-row gap-8 shadow-2xl rounded-2xl overflow-hidden bg-white">
+                        <div className="lg:w-1/3 bg-primary text-white p-8 md:p-12 flex flex-col justify-between">
+                            <div>
+                                <h3 className="text-2xl font-bold mb-6 font-heading">Contact Information</h3>
+                                <div className="space-y-6">
+                                    <div className="flex items-start gap-4">
+                                        <Phone className="w-6 h-6 text-secondary mt-1" />
+                                        <div>
+                                            <p className="font-bold text-gray-200">Phone / WhatsApp</p>
+                                            <p>068 592 3937</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-4">
+                                        <Mail className="w-6 h-6 text-secondary mt-1" />
+                                        <div>
+                                            <p className="font-bold text-gray-200">Email</p>
+                                            <p>sandilema2372@gmail.com</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-4">
+                                        <MapPin className="w-6 h-6 text-secondary mt-1" />
+                                        <div>
+                                            <p className="font-bold text-gray-200">Address</p>
+                                            <p>23 John Bridgeman Road<br />Cape Town, Western Cape</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-12">
+                                    <h4 className="font-bold text-gray-200 mb-4 font-heading">Follow Us</h4>
+                                    <div className="flex gap-4">
+                                        <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-secondary hover:text-primary transition-colors"><Facebook className="w-5 h-5" /></a>
+                                        <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-secondary hover:text-primary transition-colors"><Video className="w-5 h-5" /></a>
+                                        <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-secondary hover:text-primary transition-colors"><Youtube className="w-5 h-5" /></a>
+                                        <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-secondary hover:text-primary transition-colors"><Twitch className="w-5 h-5" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="lg:w-2/3 p-8 md:p-12 bg-white">
+                            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Full Name</label>
+                                        <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none" placeholder="John Doe" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
+                                        <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none" placeholder="068 123 4567" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Email Address</label>
+                                    <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none" placeholder="john@example.com" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Service Required</label>
+                                    <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none">
+                                        <option>Swimming Pool</option>
+                                        <option>Construction/Renovation</option>
+                                        <option>Paving/Tiling</option>
+                                        <option>Painting/Maintenance</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-700 mb-2">Message</label>
+                                    <textarea rows="4" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent outline-none" placeholder="Tell us about your project..."></textarea>
+                                </div>
+                                <Button className="w-full md:w-auto">Send Message</Button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const App = () => {
+            const [currentPage, setCurrentPage] = useState('home');
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 50);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            useEffect(() => {
+                window.scrollTo(0, 0);
+                setIsMenuOpen(false);
+            }, [currentPage]);
+
+            const navLinks = [
+                { id: 'home', label: 'Home' },
+                { id: 'about', label: 'About Us' },
+                { id: 'services', label: 'Services' },
+                { id: 'gallery', label: 'Gallery' },
+                { id: 'contact', label: 'Contact' },
+            ];
+
+            return (
+                <div className="font-sans text-dark bg-white min-h-screen flex flex-col">
+                    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white/90 backdrop-blur-md py-4'}`}>
+                        <div className="container mx-auto px-4 flex justify-between items-center">
+                            
+                            <div 
+                                onClick={() => setCurrentPage('home')} 
+                                className="flex items-center gap-2 cursor-pointer"
+                            >
+                                <img 
+                                    src="https://i.postimg.cc/0NWpgMRb/ANDY-RENOVATION.png" 
+                                    alt="Andy Renovations Logo" 
+                                    className="w-12 h-12 rounded-full object-cover border-2 border-primary"
+                                />
+                                <div>
+                                    <h1 className="text-xl md:text-2xl font-extrabold text-primary leading-none font-heading">ANDY</h1>
+                                    <span className="text-xs font-bold text-accent tracking-widest font-heading">RENOVATIONS</span>
+                                </div>
+                            </div>
+
+                            <div className="hidden md:flex items-center gap-8">
+                                {navLinks.map(link => (
+                                    <button
+                                        key={link.id}
+                                        onClick={() => setCurrentPage(link.id)}
+                                        className={`text-sm font-bold uppercase tracking-wide transition-colors font-heading ${currentPage === link.id ? 'text-accent' : 'text-gray-600 hover:text-primary'}`}
+                                    >
+                                        {link.label}
+                                    </button>
+                                ))}
+                                <Button onClick={() => setCurrentPage('contact')} className="text-sm px-6 py-2">Get Quote</Button>
+                            </div>
+
+                            <button className="md:hidden text-primary" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                {isMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+                            </button>
+                        </div>
+
+                        {isMenuOpen && (
+                            <div className="md:hidden bg-white absolute top-full left-0 w-full shadow-xl border-t border-gray-100 flex flex-col p-4 animate-fadeIn">
+                                {navLinks.map(link => (
+                                    <button
+                                        key={link.id}
+                                        onClick={() => setCurrentPage(link.id)}
+                                        className={`py-3 text-left font-bold font-heading ${currentPage === link.id ? 'text-accent' : 'text-gray-600'}`}
+                                    >
+                                        {link.label}
+                                    </button>
+                                ))}
+                                <Button onClick={() => setCurrentPage('contact')} className="mt-4 w-full">Get a Quote</Button>
+                            </div>
+                        )}
+                    </nav>
+
+                    <main className="flex-grow">
+                        {currentPage === 'home' && <HomePage setPage={setCurrentPage} />}
+                        {currentPage === 'about' && <AboutPage setPage={setCurrentPage} />}
+                        {currentPage === 'services' && <ServicesPage setPage={setCurrentPage} />}
+                        {currentPage === 'gallery' && <GalleryPage />}
+                        {currentPage === 'contact' && <ContactPage />}
+                    </main>
+
+                    <footer className="bg-dark text-gray-400 py-12 px-4 border-t-4 border-secondary">
+                        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <div>
+                                <div className="flex items-center gap-2 mb-4">
+                                    <img 
+                                        src="https://i.postimg.cc/0NWpgMRb/ANDY-RENOVATION.png" 
+                                        alt="Andy Renovations Logo" 
+                                        className="w-10 h-10 rounded-full object-cover border border-white"
+                                    />
+                                    <span className="text-xl font-bold text-white font-heading">ANDY RENOVATIONS</span>
+                                </div>
+                                <p className="text-sm mb-4">Quality work always explains itself. Trusted construction and pool specialists in Cape Town.</p>
+                            </div>
+                            
+                            <div>
+                                <h4 className="text-white font-bold mb-4 font-heading">Services</h4>
+                                <ul className="space-y-2 text-sm">
+                                    <li><button onClick={() => setCurrentPage('services')} className="hover:text-secondary">Swimming Pools</button></li>
+                                    <li><button onClick={() => setCurrentPage('services')} className="hover:text-secondary">Home Renovations</button></li>
+                                    <li><button onClick={() => setCurrentPage('services')} className="hover:text-secondary">Tiling & Paving</button></li>
+                                    <li><button onClick={() => setCurrentPage('services')} className="hover:text-secondary">Maintenance</button></li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="text-white font-bold mb-4 font-heading">Contact</h4>
+                                <ul className="space-y-2 text-sm">
+                                    <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> 068 592 3937</li>
+                                    <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> sandilema2372@gmail.com</li>
+                                    <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> 23 John Bridgeman Rd, CT</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h4 className="text-white font-bold mb-4 font-heading">Socials</h4>
+                                <div className="flex gap-4">
+                                    <a href="#" className="hover:text-secondary transition-colors"><Facebook /></a>
+                                    <a href="#" className="hover:text-secondary transition-colors"><Video /></a>
+                                    <a href="#" className="hover:text-secondary transition-colors"><Youtube /></a>
+                                    <a href="#" className="hover:text-secondary transition-colors"><Twitch /></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="border-t border-gray-700 mt-12 pt-8 text-center text-sm">
+                            &copy; {new Date().getFullYear()} Andy Renovations. All rights reserved.
+                        </div>
+                    </footer>
+
+                    <WhatsAppButton />
+                    
+                    <div className="fixed bottom-6 left-6 z-40">
+                        {scrolled && (
+                            <button 
+                                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                                className="bg-primary text-white p-3 rounded-full shadow-lg hover:bg-accent transition-all"
+                            >
+                                <ArrowRight className="w-6 h-6 transform -rotate-90" />
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
